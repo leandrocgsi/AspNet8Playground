@@ -1,1 +1,1 @@
-# AspNetCore3Playground
+# AspNetCore5Playground
