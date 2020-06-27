@@ -1,4 +1,5 @@
 ﻿using APIAspNetCore5.Business;
+using APIAspNetCore5.Data.VO;
 using APIAspNetCore5.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,7 +43,7 @@ namespace APIAspNetCore5.Controllers
         //Mapeia as requisições POST para http://localhost:{porta}/api/books/v1/
         //O [FromBody] consome o Objeto JSON enviado no corpo da requisição
         [HttpPost]
-        public IActionResult Post([FromBody] Book book)
+        public IActionResult Post([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
             return new ObjectResult(_bookBusiness.Create(book));
@@ -51,7 +52,7 @@ namespace APIAspNetCore5.Controllers
         //Mapeia as requisições PUT para http://localhost:{porta}/api/books/v1/
         //O [FromBody] consome o Objeto JSON enviado no corpo da requisição
         [HttpPut]
-        public IActionResult Put([FromBody] Book book)
+        public IActionResult Put([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
             var updatedBook = _bookBusiness.Update(book);

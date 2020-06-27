@@ -1,24 +1,23 @@
 ﻿using APIAspNetCore5.Business;
-using APIAspNetCore5.Model;
+using APIAspNetCore5.Data.VO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIAspNetCore5.Controllers
 {
 
-    /* Mapeia as requisições de http://localhost:{porta}/api/person/
+    /* Mapeia as requisições de http://localhost:{porta}/api/persons/v1/
     Por padrão o ASP.NET Core mapeia todas as classes que extendem Controller
     pegando a primeira parte do nome da classe em lower case [Person]Controller
     e expõe como endpoint REST
     */
     [ApiVersion("1")]
-    [ApiController]
     [Route("api/[controller]/v{version:apiVersion}")]
-    public class PersonsController : ControllerBase
+    public class PersonsController : Controller
     {
         //Declaração do serviço usado
         private IPersonBusiness _personBusiness;
 
-        /* Injeção de uma instancia de IPersonService ao criar
+        /* Injeção de uma instancia de IPersonBusiness ao criar
         uma instancia de PersonController */
         public PersonsController(IPersonBusiness personBusiness)
         {
@@ -47,7 +46,7 @@ namespace APIAspNetCore5.Controllers
         //Mapeia as requisições POST para http://localhost:{porta}/api/persons/v1/
         //O [FromBody] consome o Objeto JSON enviado no corpo da requisição
         [HttpPost]
-        public IActionResult Post([FromBody] Person person)
+        public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
             return new ObjectResult(_personBusiness.Create(person));
@@ -56,7 +55,7 @@ namespace APIAspNetCore5.Controllers
         //Mapeia as requisições PUT para http://localhost:{porta}/api/persons/v1/
         //O [FromBody] consome o Objeto JSON enviado no corpo da requisição
         [HttpPut]
-        public IActionResult Put([FromBody] Person person)
+        public IActionResult Put([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
             var updatedPerson = _personBusiness.Update(person);
