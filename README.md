@@ -1,4 +1,4 @@
-# AspNetCore5Playground
+# Asp Net Core 5 Playground
 
 [![Build Status](https://travis-ci.org/leandrocgsi/RestWithASP-NETUdemy.svg?branch=master)](https://travis-ci.org/leandrocgsi/RestWithASP-NETUdemy)
 
