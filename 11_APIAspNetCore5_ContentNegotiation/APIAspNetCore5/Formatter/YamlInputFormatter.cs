@@ -10,13 +10,14 @@ namespace APIAspNetCore5.Formatter
     {
         private readonly Deserializer _deserializer;
 
-        public YamlInputFormatter()
+        public YamlInputFormatter(Deserializer serializer)
         {
+            _deserializer = serializer;
             SupportedEncodings.Add(Encoding.UTF8);
             SupportedEncodings.Add(Encoding.Unicode);
             SupportedMediaTypes.Add(MediaTypeHeaderValues.ApplicationYaml);
+            SupportedMediaTypes.Add(MediaTypeHeaderValues.TextYaml);
         }
-
         public override Task<InputFormatterResult> ReadRequestBodyAsync(InputFormatterContext context, Encoding encoding)
         {
             if (context == null)

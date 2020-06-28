@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using APIAspNetCore5.Formatter;
+using YamlDotNet.Serialization.NamingConventions;
+using YamlDotNet.Serialization;
 
 namespace APIAspNetCore5
 {
@@ -45,11 +47,15 @@ namespace APIAspNetCore5
 
             services.AddControllers();
 
+            var serializer = (Serializer) new SerializerBuilder().Build();
+            var deserializer = (Deserializer) new DeserializerBuilder().Build();
+
             services.AddMvc(options =>
             {
                 options.RespectBrowserAcceptHeader = true;
-                options.InputFormatters.Insert(0, new YamlInputFormatter());
-                options.OutputFormatters.Insert(0, new YamlOutputFormatter());
+
+                options.InputFormatters.Add(new YamlInputFormatter(deserializer));
+                options.OutputFormatters.Add(new YamlOutputFormatter(serializer));
                 options.FormatterMappings.SetMediaTypeMappingForFormat("yaml", MediaTypeHeaderValues.ApplicationYaml);
 
                 options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));

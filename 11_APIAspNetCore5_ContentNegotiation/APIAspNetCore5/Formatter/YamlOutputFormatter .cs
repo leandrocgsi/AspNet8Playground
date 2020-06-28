@@ -11,13 +11,14 @@ namespace APIAspNetCore5.Formatter
     public class YamlOutputFormatter : TextOutputFormatter
     {
         private readonly Serializer _serializer;
-        private ISerializer serializer;
 
-        public YamlOutputFormatter(ISerializer serializer)
+        public YamlOutputFormatter(Serializer serializer)
         {
+            _serializer = serializer;
             SupportedEncodings.Add(Encoding.UTF8);
             SupportedEncodings.Add(Encoding.Unicode);
             SupportedMediaTypes.Add(MediaTypeHeaderValues.ApplicationYaml);
+            SupportedMediaTypes.Add(MediaTypeHeaderValues.TextYaml);
         }
 
         public override async Task WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
@@ -47,8 +48,6 @@ namespace APIAspNetCore5.Formatter
             {
                 throw new ArgumentNullException(nameof(writer));
             }
-            //var serializer = new SerializerBuilder().WithNodeStyle(YamlNodeStyle.Flow).Build();
-            var serializer = new YamlOutputFormatter(new SerializerBuilder().WithNamingConvention(namingConvention: new CamelCaseNamingConvention()).Build());
             _serializer.Serialize(writer, value);
         }
     }
