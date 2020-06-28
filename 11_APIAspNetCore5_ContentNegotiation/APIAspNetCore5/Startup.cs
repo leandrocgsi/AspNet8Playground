@@ -47,8 +47,8 @@ namespace APIAspNetCore5
 
             services.AddControllers();
 
-            var serializer = (Serializer) new SerializerBuilder().Build();
-            var deserializer = (Deserializer) new DeserializerBuilder().Build();
+            var serializer = (Serializer) new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
+            var deserializer = (Deserializer) new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
 
             services.AddMvc(options =>
             {

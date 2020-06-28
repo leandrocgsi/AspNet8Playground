@@ -20,7 +20,6 @@ namespace APIAspNetCore5.Formatter
             SupportedMediaTypes.Add(MediaTypeHeaderValues.ApplicationYaml);
             SupportedMediaTypes.Add(MediaTypeHeaderValues.TextYaml);
         }
-
         public override async Task WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
         {
             if (context == null)
@@ -48,6 +47,7 @@ namespace APIAspNetCore5.Formatter
             {
                 throw new ArgumentNullException(nameof(writer));
             }
+
             _serializer.Serialize(writer, value);
         }
     }
