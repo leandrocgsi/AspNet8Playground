@@ -49,3 +49,5 @@ namespace APIAspNetCore5.Formatter
         }
     }
 }
+
+// https://dejanstojanovic.net/aspnet/2018/september/custom-input-and-output-serializers-in-aspnet-core/
