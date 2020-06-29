@@ -63,7 +63,6 @@ namespace APIAspNetCore5.Controllers
             return new ObjectResult(updatedPerson);
         }
 
-
         //Mapeia as requisições DELETE para http://localhost:{porta}/api/persons/v1/{id}
         //recebendo um ID como no Path da requisição
         [HttpDelete("{id}")]
