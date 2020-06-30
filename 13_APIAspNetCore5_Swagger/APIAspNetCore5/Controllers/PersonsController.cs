@@ -2,8 +2,6 @@
 using APIAspNetCore5.Data.VO;
 using APIAspNetCore5.Filters;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.Swagger.Annotations;
-using System.Collections.Generic;
 
 namespace APIAspNetCore5.Controllers
 {
@@ -33,10 +31,6 @@ namespace APIAspNetCore5.Controllers
         // determina o objeto de retorno em caso de sucesso List<Person>
         // O [SwaggerResponse(XYZ)] define os códigos de retorno 204, 400 e 401
         [HttpGet]
-        [SwaggerResponse((200), Type = typeof(List<PersonVO>))]
-        [SwaggerResponse(204)]
-        [SwaggerResponse(400)]
-        [SwaggerResponse(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
@@ -49,10 +43,6 @@ namespace APIAspNetCore5.Controllers
         // determina o objeto de retorno em caso de sucesso Person
         // O [SwaggerResponse(XYZ)] define os códigos de retorno 204, 400 e 401
         [HttpGet("{id}")]
-        [SwaggerResponse((200), Type = typeof(PersonVO))]
-        [SwaggerResponse(204)]
-        [SwaggerResponse(400)]
-        [SwaggerResponse(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
@@ -67,9 +57,6 @@ namespace APIAspNetCore5.Controllers
         // determina o objeto de retorno em caso de sucesso Person
         // O [SwaggerResponse(XYZ)] define os códigos de retorno 400 e 401
         [HttpPost]
-        [SwaggerResponse((201), Type = typeof(PersonVO))]
-        [SwaggerResponse(400)]
-        [SwaggerResponse(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
@@ -82,9 +69,6 @@ namespace APIAspNetCore5.Controllers
         // determina o objeto de retorno em caso de sucesso Person
         // O [SwaggerResponse(XYZ)] define os códigos de retorno 400 e 401
         [HttpPut]
-        [SwaggerResponse((202), Type = typeof(PersonVO))]
-        [SwaggerResponse(400)]
-        [SwaggerResponse(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person)
         {
@@ -98,9 +82,6 @@ namespace APIAspNetCore5.Controllers
         // http://localhost:{porta}/api/persons/v1/{id}
         // O [SwaggerResponse(XYZ)] define os códigos de retorno 400 e 401
         [HttpDelete("{id}")]
-        [SwaggerResponse(204)]
-        [SwaggerResponse(400)]
-        [SwaggerResponse(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(int id)
         {

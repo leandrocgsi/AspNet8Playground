@@ -2,8 +2,6 @@
 using APIAspNetCore5.Data.VO;
 using APIAspNetCore5.Filters;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.Swagger.Annotations;
-using System.Collections.Generic;
 
 namespace APIAspNetCore5.Controllers
 {
@@ -29,10 +27,6 @@ namespace APIAspNetCore5.Controllers
         // determina o objeto de retorno em caso de sucesso List<Book>
         // O [SwaggerResponse(XYZ)] define os códigos de retorno 204, 400 e 401
         [HttpGet]
-        [SwaggerResponse((200), Type = typeof(List<BookVO>))]
-        [SwaggerResponse(204)]
-        [SwaggerResponse(400)]
-        [SwaggerResponse(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
@@ -45,10 +39,6 @@ namespace APIAspNetCore5.Controllers
         // determina o objeto de retorno em caso de sucesso Book
         // O [SwaggerResponse(XYZ)] define os códigos de retorno 204, 400 e 401
         [HttpGet("{id}")]
-        [SwaggerResponse((200), Type = typeof(BookVO))]
-        [SwaggerResponse(204)]
-        [SwaggerResponse(400)]
-        [SwaggerResponse(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
@@ -63,9 +53,6 @@ namespace APIAspNetCore5.Controllers
         // determina o objeto de retorno em caso de sucesso Book
         // O [SwaggerResponse(XYZ)] define os códigos de retorno 400 e 401
         [HttpPost]
-        [SwaggerResponse((201), Type = typeof(BookVO))]
-        [SwaggerResponse(400)]
-        [SwaggerResponse(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] BookVO book)
         {
@@ -78,9 +65,6 @@ namespace APIAspNetCore5.Controllers
         // determina o objeto de retorno em caso de sucesso Book
         // O [SwaggerResponse(XYZ)] define os códigos de retorno 400 e 401
         [HttpPut]
-        [SwaggerResponse((202), Type = typeof(BookVO))]
-        [SwaggerResponse(400)]
-        [SwaggerResponse(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] BookVO book)
         {
@@ -94,9 +78,6 @@ namespace APIAspNetCore5.Controllers
         // http://localhost:{porta}/api/books/v1/{id}
         // O [SwaggerResponse(XYZ)] define os códigos de retorno 400 e 401
         [HttpDelete("{id}")]
-        [SwaggerResponse(204)]
-        [SwaggerResponse(400)]
-        [SwaggerResponse(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(int id)
         {
