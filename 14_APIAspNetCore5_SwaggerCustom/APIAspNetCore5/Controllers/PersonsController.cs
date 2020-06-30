@@ -2,6 +2,7 @@
 using APIAspNetCore5.Data.VO;
 using APIAspNetCore5.Filters;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace APIAspNetCore5.Controllers
 {
@@ -27,10 +28,14 @@ namespace APIAspNetCore5.Controllers
 
         // Configura o Swagger para a operação
         // http://localhost:{porta}/api/persons/v1/
-        // [SwaggerResponse((202), Type = typeof(List<Person>))]
+        // [ProducesResponseType((202), Type = typeof(List<Person>))]
         // determina o objeto de retorno em caso de sucesso List<Person>
-        // O [SwaggerResponse(XYZ)] define os códigos de retorno 204, 400 e 401
+        // O [ProducesResponseType(XYZ)] define os códigos de retorno 204, 400 e 401
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
@@ -39,10 +44,14 @@ namespace APIAspNetCore5.Controllers
 
         // Configura o Swagger para a operação
         // http://localhost:{porta}/api/persons/v1/{id}
-        // [SwaggerResponse((202), Type = typeof(Person))]
+        // [ProducesResponseType((202), Type = typeof(Person))]
         // determina o objeto de retorno em caso de sucesso Person
-        // O [SwaggerResponse(XYZ)] define os códigos de retorno 204, 400 e 401
+        // O [ProducesResponseType(XYZ)] define os códigos de retorno 204, 400 e 401
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
@@ -53,10 +62,13 @@ namespace APIAspNetCore5.Controllers
 
         // Configura o Swagger para a operação
         // http://localhost:{porta}/api/
-        // [SwaggerResponse((202), Type = typeof(Person))]
+        // [ProducesResponseType((202), Type = typeof(Person))]
         // determina o objeto de retorno em caso de sucesso Person
-        // O [SwaggerResponse(XYZ)] define os códigos de retorno 400 e 401
+        // O [ProducesResponseType(XYZ)] define os códigos de retorno 400 e 401
         [HttpPost]
+        [ProducesResponseType((201), Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
@@ -67,8 +79,11 @@ namespace APIAspNetCore5.Controllers
         // Configura o Swagger para a operação
         // http://localhost:{porta}/api/persons/v1/
         // determina o objeto de retorno em caso de sucesso Person
-        // O [SwaggerResponse(XYZ)] define os códigos de retorno 400 e 401
+        // O [ProducesResponseType(XYZ)] define os códigos de retorno 400 e 401
         [HttpPut]
+        [ProducesResponseType((202), Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person)
         {
@@ -80,8 +95,11 @@ namespace APIAspNetCore5.Controllers
 
         // Configura o Swagger para a operação
         // http://localhost:{porta}/api/persons/v1/{id}
-        // O [SwaggerResponse(XYZ)] define os códigos de retorno 400 e 401
+        // O [ProducesResponseType(XYZ)] define os códigos de retorno 400 e 401
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(int id)
         {
@@ -91,4 +109,6 @@ namespace APIAspNetCore5.Controllers
     }
 }
 
+
 // https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-3.1&tabs=visual-studio
+// https://github.com/domaindrivendev/Swashbuckle.AspNetCore
