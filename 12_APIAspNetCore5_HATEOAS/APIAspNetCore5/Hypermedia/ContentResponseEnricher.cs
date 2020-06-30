@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Routing;
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -53,7 +54,9 @@ namespace APIAspNetCore5.Hypermedia
                 }
                 else if (okObjectResult.Value is List<T> collection)
                 {
-                    Parallel.ForEach(collection.ToList(), (element) =>
+                    ConcurrentBag<T> bag = new ConcurrentBag<T>(collection);
+
+                    Parallel.ForEach(bag, (element) =>
                     {
                         EnrichModel(element, urlHelper);
                     });

@@ -1,4 +1,6 @@
-﻿namespace APIAspNetCore5.Hypermedia
+﻿using System.Text;
+
+namespace APIAspNetCore5.Hypermedia
 {
     /// <summary>
     /// Represents a HyperMedia Link
@@ -22,7 +24,12 @@
         public string Href
         {
             get {
-                return href.Replace("%2F", "/");
+                object _lock = new object();
+                lock (_lock)
+                {
+                    StringBuilder sb = new StringBuilder(href);
+                    return sb.Replace("%2F", "/").ToString();
+                }
             }
             set {
                 href = value;
