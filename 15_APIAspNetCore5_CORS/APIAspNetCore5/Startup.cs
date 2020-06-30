@@ -26,6 +26,8 @@ namespace APIAspNetCore5
     public class Startup
     {
         public IWebHostEnvironment Environment { get; }
+
+        ///readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
@@ -93,6 +95,27 @@ namespace APIAspNetCore5
                         }
                     });
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("FOO",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://www.erudio.com.br",
+                                            "http://www.semeru.com.br",
+                                            "http://localhost/")
+                               .WithMethods("POST", "PUT", "PATCH", "DELETE", "GET");
+                    });
+
+                options.AddPolicy("AnotherPolicy",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://www.erudio.com.br",
+                                            "http://localhost/")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod()
+                               .WithMethods("POST", "PUT", "PATCH", "DELETE", "GET");
+                    });
+            });
 
             //Dependency Injection
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
@@ -111,6 +134,8 @@ namespace APIAspNetCore5
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("FOO");
 
             app.UseAuthorization();
 
@@ -156,3 +181,6 @@ namespace APIAspNetCore5
 
     }
 }
+
+// https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-3.1
+// https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-3.1#cpo
