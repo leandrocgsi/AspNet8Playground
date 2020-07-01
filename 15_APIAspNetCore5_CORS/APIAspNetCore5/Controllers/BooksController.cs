@@ -1,7 +1,6 @@
 ﻿using APIAspNetCore5.Business;
 using APIAspNetCore5.Data.VO;
 using APIAspNetCore5.Filters;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -9,7 +8,6 @@ namespace APIAspNetCore5.Controllers
 {
 
     [ApiVersion("1")]
-    [EnableCors]
     [ApiController]
     [Route("api/[controller]/v{version:apiVersion}")]
     public class BooksController : Controller

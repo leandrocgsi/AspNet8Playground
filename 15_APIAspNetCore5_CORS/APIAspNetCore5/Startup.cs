@@ -26,8 +26,6 @@ namespace APIAspNetCore5
     public class Startup
     {
         public IWebHostEnvironment Environment { get; }
-
-        ///readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
@@ -50,6 +48,19 @@ namespace APIAspNetCore5
             {
                 MigrateDatabase(connection);
             }
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .SetIsOriginAllowed(isOriginAllowed: _ => true));
+
+                options.AddPolicy("AllowSpecific", p => p.WithOrigins(
+                        "http://www.erudio.com.br",
+                        "http://localhost/")
+                    .WithMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT"));
+            });
 
             services.AddControllers();
 
@@ -95,27 +106,6 @@ namespace APIAspNetCore5
                         }
                     });
             });
-            services.AddCors(options =>
-            {
-                options.AddPolicy("FOO",
-                    builder =>
-                    {
-                        builder.WithOrigins("http://www.erudio.com.br",
-                                            "http://www.semeru.com.br",
-                                            "http://localhost/")
-                               .WithMethods("POST", "PUT", "PATCH", "DELETE", "GET");
-                    });
-
-                options.AddPolicy("AnotherPolicy",
-                    builder =>
-                    {
-                        builder.WithOrigins("http://www.erudio.com.br",
-                                            "http://localhost/")
-                                            .AllowAnyHeader()
-                                            .AllowAnyMethod()
-                               .WithMethods("POST", "PUT", "PATCH", "DELETE", "GET");
-                    });
-            });
 
             //Dependency Injection
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
@@ -131,11 +121,12 @@ namespace APIAspNetCore5
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseCors("FOO");
+            // global cors policy
+            app.UseCors("AllowSpecific");
 
             app.UseAuthorization();
 
@@ -181,6 +172,3 @@ namespace APIAspNetCore5
 
     }
 }
-
-// https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-3.1
-// https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-3.1#cpo

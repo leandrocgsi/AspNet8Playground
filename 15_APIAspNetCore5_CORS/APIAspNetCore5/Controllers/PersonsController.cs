@@ -14,8 +14,6 @@ namespace APIAspNetCore5.Controllers
     e expõe como endpoint REST
     */
     [ApiVersion("1")]
-    [EnableCors("FOO")]
-    [ApiController]
     [Route("api/[controller]/v{version:apiVersion}")]
     public class PersonsController : Controller
     {
@@ -40,6 +38,7 @@ namespace APIAspNetCore5.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
+        [EnableCors("AllowSpecific")]
         public IActionResult Get()
         {
             return new OkObjectResult(_personBusiness.FindAll());
@@ -51,12 +50,12 @@ namespace APIAspNetCore5.Controllers
         // determina o objeto de retorno em caso de sucesso Person
         // O [ProducesResponseType(XYZ)] define os códigos de retorno 204, 400 e 401
         [HttpGet("{id}")]
-        [DisableCors]
         [ProducesResponseType((200), Type = typeof(PersonVO))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
+        [EnableCors("AllowSpecific")]
         public IActionResult Get(long id)
         {
             var person = _personBusiness.FindById(id);
