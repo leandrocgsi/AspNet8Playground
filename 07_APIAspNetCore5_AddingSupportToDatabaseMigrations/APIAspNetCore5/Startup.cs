@@ -18,11 +18,15 @@ namespace APIAspNetCore5
 {
     public class Startup
     {
-        public IWebHostEnvironment _environment { get; }
+        public IWebHostEnvironment Environment { get; }
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
-            _environment = environment;
+            Environment = environment;
+
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -33,26 +37,9 @@ namespace APIAspNetCore5
             var connection = Configuration["MySqlConnection:MySqlConnectionString"];
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
 
-            if (_environment.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
-                try
-                {
-                    var evolveConnection = new MySql.Data.MySqlClient.MySqlConnection(connection);
-
-                    var evolve = new Evolve.Evolve(evolveConnection, msg => _logger.LogInformation(msg))
-                    {
-                        Locations = new List<string> { "db/migrations", "db/dataset" },
-                        IsEraseDisabled = true,
-                    };
-
-                    evolve.Migrate();
-
-                }
-                catch (Exception ex)
-                {
-                    //_logger.LogCritical("Database migration failed.", ex);
-                    throw;
-                }
+                MigrateDatabase(connection);
             }
 
             services.AddControllers();
@@ -83,5 +70,27 @@ namespace APIAspNetCore5
                 endpoints.MapControllers();
             });
         }
+
+        private static void MigrateDatabase(string connection)
+        {
+            try
+            {
+                var evolveConnection = new MySql.Data.MySqlClient.MySqlConnection(connection);
+
+                var evolve = new Evolve.Evolve(evolveConnection, msg => Log.Information(msg))
+                {
+                    Locations = new List<string> { "db/migrations", "db/dataset" },
+                    IsEraseDisabled = true,
+                };
+
+                evolve.Migrate();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Database migration failed.", ex);
+                throw;
+            }
+        }
+
     }
 }
