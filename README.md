@@ -1,6 +1,7 @@
 # Asp Net Core 5 Playground
 
 [![Build Status](https://travis-ci.org/leandrocgsi/RestWithASP-NETUdemy.svg?branch=master)](https://travis-ci.org/leandrocgsi/RestWithASP-NETUdemy)
+![Docker](https://github.com/leandrocgsi/AspNetCore5Playground/workflows/Docker/badge.svg)
 
 # REST API's RESTFul do 0 à Nuvem Com ASP.NET 5 e Docker
 
