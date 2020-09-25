@@ -1,31 +1,42 @@
-name: Docker
+name: Docker Image CI
 
-on:
-  push:
-    branches:
-      - master
-    tags:
-      - v*
+on: [push]
 
 env:
   IMAGE_NAME: api-asp-net-core-5
 
 jobs:
-  push:
+
+  build:
+
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
 
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v1
 
-      - name: Build images
-        working-directory: ./20_APIAspNetCore5_AddingDockerSupport
-        run: docker-compose build
+    - name: Docker Login - Azure Container Registry
+      uses: Azure/docker-login@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        login-server: ${{ secrets.DOCKER_CONTAINER_REGISTRY }}
 
-      - name: Log into Docker Hub
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+    - name: Build images
+      working-directory: ./20_APIAspNetCore5_AddingDockerSupport
+      run: docker-compose build        
 
-      - name: Push image to Docker Hub
-        run: |
-          docker tag $IMAGE_NAME ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:${{github.run_id}}
-          docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:${{github.run_id}}
+    - name: Push to Azure Container Registry
+      run: |
+          docker tag $IMAGE_NAME:latest ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/$IMAGE_NAME:${{github.run_id}}
+          docker push ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/$IMAGE_NAME:${{github.run_id}}
+
+    - name: Login in Azure to Deployment
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Azure WebApp Container - Application Deployment
+      uses: Azure/webapps-container-deploy@v1
+      with:
+        app-name: erudio-api-server
+        images: ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/$IMAGE_NAME:latest
