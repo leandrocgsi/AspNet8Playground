@@ -11,7 +11,7 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: asp-net-core-5-playground
+  IMAGE_NAME: api-asp-net-core-5
 
 jobs:
   push:
@@ -25,27 +25,10 @@ jobs:
         working-directory: ./20_APIAspNetCore5_AddingDockerSupport
         run: docker-compose build
 
-      - name: Log into GitHub Container Registry
+      - name: Log into Docker Hub
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
-      - name: Push image to GitHub Container Registry
+      - name: Push image to Docker Hub
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
-
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+          docker tag $IMAGE_NAME ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:latest
