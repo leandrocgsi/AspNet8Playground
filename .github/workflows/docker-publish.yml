@@ -27,8 +27,8 @@ jobs:
 
     - name: Push to Azure Container Registry
       run: |
-          docker tag $IMAGE_NAME:latest ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/$IMAGE_NAME:${{github.run_id}}
-          docker push ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/$IMAGE_NAME:${{github.run_id}}
+          docker tag ${{ IMAGE_NAME }}:latest ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/${{ IMAGE_NAME }}:${{github.run_id}}
+          docker push ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/${{ IMAGE_NAME }}:${{github.run_id}}
 
     - name: Login in Azure to Deployment
       uses: azure/login@v1
@@ -39,4 +39,4 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: erudio-api-server
-        images: ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/$IMAGE_NAME:${{github.run_id}}
+        images: ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/${{ IMAGE_NAME }}:${{github.run_id}}
