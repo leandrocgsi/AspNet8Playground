@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build images
-        working-directory: ./19_RestWithASPNETUdemy_AddingDockerSupport/RestWithASPNETUdemy
+        working-directory: ./20_APIAspNetCore5_AddingDockerSupport
         run: docker-compose build
 
       - name: Log into GitHub Container Registry
