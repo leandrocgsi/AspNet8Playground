@@ -7,9 +7,6 @@ on:
     tags:
       - v*
 
-  # Run tests for any PRs.
-  pull_request:
-
 env:
   IMAGE_NAME: api-asp-net-core-5
 
@@ -30,5 +27,5 @@ jobs:
 
       - name: Push image to Docker Hub
         run: |
-          docker tag $IMAGE_NAME ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$github.run_id
-          docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$github.run_id
+          docker tag $IMAGE_NAME ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:${{github.run_id}}
+          docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:${{github.run_id}}
