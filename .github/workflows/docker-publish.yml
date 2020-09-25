@@ -36,7 +36,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Azure WebApp Container - Application Deployment
-      uses: Azure/webapps-container-deploy@v1
+      uses: azure/webapps-deploy@v2
       with:
         app-name: erudio-api-server
         images: ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/$IMAGE_NAME:latest
