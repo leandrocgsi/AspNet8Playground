@@ -50,4 +50,4 @@ namespace APIAspNetCore5.Hypermedia
     }
 }
 
-https://shatzisblog.wordpress.com/2017/09/01/generating-hypermedia-links-for-an-asp-net-core-web-api/
+// https://shatzisblog.wordpress.com/2017/09/01/generating-hypermedia-links-for-an-asp-net-core-web-api/
