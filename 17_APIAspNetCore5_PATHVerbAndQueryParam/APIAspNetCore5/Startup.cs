@@ -152,7 +152,7 @@ namespace APIAspNetCore5
             services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
 
             services.AddScoped<IUserRepository, UserRepositoryImplementation>();
-
+            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
 
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }

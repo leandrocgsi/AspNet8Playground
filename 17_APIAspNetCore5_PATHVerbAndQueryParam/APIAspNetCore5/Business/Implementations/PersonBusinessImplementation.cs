@@ -1,6 +1,7 @@
 ﻿using APIAspNetCore5.Data.Converters;
 using APIAspNetCore5.Data.VO;
 using APIAspNetCore5.Model;
+using APIAspNetCore5.Repository;
 using APIAspNetCore5.Repository.Generic;
 using System.Collections.Generic;
 
@@ -9,11 +10,11 @@ namespace APIAspNetCore5.Business.Implementations
     public class PersonBusinessImplementation : IPersonBusiness
     {
 
-        private IRepository<Person> _repository;
+        private IPersonRepository _repository;
 
         private readonly PersonConverter _converter;
 
-        public PersonBusinessImplementation(IRepository<Person> repository)
+        public PersonBusinessImplementation(IPersonRepository repository)
         {
             _repository = repository;
             _converter = new PersonConverter();
@@ -34,6 +35,10 @@ namespace APIAspNetCore5.Business.Implementations
         public List<PersonVO> FindAll()
         {
             return _converter.ParseList(_repository.FindAll());
+        }
+        public List<PersonVO> FindByName(string firstName, string lastName)
+        {
+            return _converter.ParseList(_repository.FindByName(firstName, lastName));
         }
 
         public PersonVO Update(PersonVO person)

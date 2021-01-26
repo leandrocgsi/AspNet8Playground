@@ -1,19 +1,11 @@
 ﻿using APIAspNetCore5.Model;
-using System;
+using APIAspNetCore5.Repository.Generic;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace APIAspNetCore5.Repository
 {
-    public interface IPersonRepository
+    public interface IPersonRepository : IRepository<Person>
     {
-        Person Create(Person person);
-        Person FindById(long id);
-        List<Person> FindAll();
-        Person Update(Person person);
-        void Delete(long id);
-
-        bool Exists(long? id);
+        List<Person> FindByName(string fristName, string lastName);
     }
 }
