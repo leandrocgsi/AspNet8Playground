@@ -113,6 +113,24 @@ namespace APIAspNetCore5.Controllers
         }
 
         // Configura o Swagger para a operação
+        // http://localhost:{porta}/api/persons/v1/
+        // determina o objeto de retorno em caso de sucesso Person
+        // O [SwaggerResponse(XYZ)] define os códigos de retorno 400 e 401
+        [HttpPatch]
+        [ProducesResponseType((202), Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [Authorize("Bearer")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Patch([FromBody] PersonVO person)
+        {
+            if (person == null) return BadRequest();
+            var updatedPerson = _personBusiness.Update(person);
+            if (updatedPerson == null) return BadRequest();
+            return new OkObjectResult(updatedPerson);
+        }
+
+        // Configura o Swagger para a operação
         // http://localhost:{porta}/api/persons/v1/{id}
         // O [ProducesResponseType(XYZ)] define os códigos de retorno 400 e 401
         [HttpDelete("{id}")]
