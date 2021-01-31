@@ -1,31 +1,35 @@
 ﻿using APIAspNetCore5.Data.VO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace APIAspNetCore5.Business.Implementations
 {
     public class FileBusinessImplementation : IFileBusiness
     {
-        private readonly String path;
-
-        public FileBusinessImplementation()
+        private readonly string path;
+        private readonly IHttpContextAccessor _context;
+        public FileBusinessImplementation(IHttpContextAccessor context)
         {
+            _context = context;
             path = Directory.GetCurrentDirectory();
         }
-        public byte[] GetPDFFile()
+        public FileStream GetFile(string fileName)
         {
-            
-            var fullPath = path + "\\Other\\aspnet-life-cycles-events.pdf";
-            return File.ReadAllBytes(fullPath);
+
+            var fullPath = path + $"\\Other\\UploadDir\\{fileName}";
+            var file = File.OpenRead(fullPath);
+            return file;
         }
 
-        public FileDetailVO SaveFileToDisk(IFormFile file)
+        public async Task<FileDetailVO> SaveFileToDiskAsync(IFormFile file)
         {
             FileDetailVO fileDetail = new FileDetailVO();
             var fileType = Path.GetExtension(file.FileName);
+            var baseURL = _context.HttpContext.Request.Host;
 
             if (fileType.ToLower() == ".pdf" || fileType.ToLower() == ".jpg" || fileType.ToLower() == ".png" || fileType.ToLower() == ".jpeg")
             {
@@ -33,27 +37,27 @@ namespace APIAspNetCore5.Business.Implementations
                 var docName = Path.GetFileName(file.FileName);
                 if (file != null && file.Length > 0)
                 {
+                    var destination = Path.Combine(fullPath, "", docName);
                     fileDetail.DocumentName = docName;
                     fileDetail.DocType = fileType;
-                    fileDetail.DocUrl = Path.Combine(fullPath, "", fileDetail.DocumentName);
-                    using (var stream = new FileStream(fileDetail.DocUrl, FileMode.Create))
-                    {
-                        _ = file.CopyToAsync(stream);
-                    }
+                    fileDetail.DocUrl = Path.Combine(baseURL + "/api/file/v1/", fileDetail.DocumentName);
+                    using var stream = new FileStream(destination, FileMode.Create);
+                    await file.CopyToAsync(stream);
                 }
             }
 
             return fileDetail;
         }
 
-        public List<FileDetailVO> SaveFilesToDisk(IList<IFormFile> files)
+        public async Task<List<FileDetailVO>> SaveFilesToDiskAsync(IList<IFormFile> files)
         {
             List<FileDetailVO> list = new List<FileDetailVO>();
             foreach (var file in files)
             {
-                list.Add(SaveFileToDisk(file));
+                list.Add(await SaveFileToDiskAsync(file));
             }
             return list;
         }
+
     }
 }

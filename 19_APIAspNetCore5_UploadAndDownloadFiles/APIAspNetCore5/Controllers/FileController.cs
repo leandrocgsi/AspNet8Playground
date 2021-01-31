@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace APIAspNetCore5.Controllers
@@ -25,36 +26,42 @@ namespace APIAspNetCore5.Controllers
         }
 
         [HttpPost("multi-upload")]
-        public IActionResult UploadManyFiles([FromForm] List<IFormFile> files)
+        [ProducesResponseType((200), Type = typeof(List<FileDetailVO>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public async Task<IActionResult> UploadManyFiles([FromForm] List<IFormFile> files)
         {
-            List<FileDetailVO> list = _fileBusiness.SaveFilesToDisk(files);
-            return Ok(list);
+            List<FileDetailVO> list = await _fileBusiness.SaveFilesToDiskAsync(files);
+            return new OkObjectResult(list);
         }
 
         [HttpPost("single-upload")]
-        private FileDetailVO UploadOneFile([FromForm] IFormFile file)
+        [ProducesResponseType((200), Type = typeof(FileDetailVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public async Task<IActionResult> UploadOneFile([FromForm] IFormFile file)
         {
-            FileDetailVO detail = _fileBusiness.SaveFileToDisk(file);
-            return detail;
+            FileDetailVO detail = await _fileBusiness.SaveFileToDiskAsync(file);
+            return new OkObjectResult(detail);
         }
 
-        [HttpGet]
+        [HttpGet("{fileName}")]
         [ProducesResponseType((200), Type = typeof(byte[]))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [Produces("application/pdf")]
         [Authorize("Bearer")]
-        public IActionResult GetPDFFile()
+        public IActionResult GetFile(string fileName)
         {
-            byte[] buffer = _fileBusiness.GetPDFFile();
-            if (buffer != null)
+            ContentDisposition contentDisposition = new ContentDisposition
             {
-                HttpContext.Response.ContentType = "application/pdf";
-                HttpContext.Response.Headers.Add("content-length", buffer.Length.ToString());
-                HttpContext.Response.Body.WriteAsync(buffer, 0, buffer.Length);
-            }
-            return new ContentResult();
+                FileName = fileName,
+                Inline = false
+            };
+            Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
+            FileStream file = _fileBusiness.GetFile(fileName);
+            return File(file, "application/pdf");
         }
     }
 }
