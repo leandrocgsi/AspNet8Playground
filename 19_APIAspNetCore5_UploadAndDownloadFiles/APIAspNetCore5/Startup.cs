@@ -72,6 +72,7 @@ namespace APIAspNetCore5
 
             services.AddSingleton(tokenConfigurations);
 
+            services.AddHttpContextAccessor(); 
 
             services.AddAuthentication(authOptions =>
             {

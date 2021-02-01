@@ -1,14 +1,10 @@
 ﻿using APIAspNetCore5.Business;
 using APIAspNetCore5.Data.VO;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace APIAspNetCore5.Controllers
@@ -25,24 +21,26 @@ namespace APIAspNetCore5.Controllers
             _fileBusiness = fileBusiness;
         }
 
-        [HttpPost("multi-upload")]
-        [ProducesResponseType((200), Type = typeof(List<FileDetailVO>))]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(401)]
-        public async Task<IActionResult> UploadManyFiles([FromForm] List<IFormFile> files)
-        {
-            List<FileDetailVO> list = await _fileBusiness.SaveFilesToDiskAsync(files);
-            return new OkObjectResult(list);
-        }
-
         [HttpPost("single-upload")]
         [ProducesResponseType((200), Type = typeof(FileDetailVO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
+        [Produces("application/json")]
         public async Task<IActionResult> UploadOneFile([FromForm] IFormFile file)
         {
-            FileDetailVO detail = await _fileBusiness.SaveFileToDiskAsync(file);
+            FileDetailVO detail = await _fileBusiness.SaveFileToDisk(file);
             return new OkObjectResult(detail);
+        }
+
+        [HttpPost("multi-upload")]
+        [ProducesResponseType((200), Type = typeof(List<FileDetailVO>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [Produces("application/json")]
+        public async Task<IActionResult> UploadManyFiles([FromForm] List<IFormFile> files)
+        {
+            List<FileDetailVO> list = await _fileBusiness.SaveFilesToDisk(files);
+            return new OkObjectResult(list);
         }
 
         [HttpGet("{fileName}")]
@@ -50,18 +48,18 @@ namespace APIAspNetCore5.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        [Produces("application/pdf")]
-        [Authorize("Bearer")]
-        public IActionResult GetFile(string fileName)
+        [Produces("application/octet-stream")]
+        public async Task<IActionResult> GetFileAsync(string fileName)
         {
-            ContentDisposition contentDisposition = new ContentDisposition
+            byte[] buffer = _fileBusiness.GetFile(fileName);
+            if (buffer != null)
             {
-                FileName = fileName,
-                Inline = false
-            };
-            Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
-            FileStream file = _fileBusiness.GetFile(fileName);
-            return File(file, "application/pdf");
+                HttpContext.Response.ContentType = $"application/{Path.GetExtension(fileName).Replace(".", "")}";
+                //HttpContext.Response.ContentType = "application/octet-stream";
+                HttpContext.Response.Headers.Add("content-length", buffer.Length.ToString());
+                await HttpContext.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+            }
+            return new ContentResult();
         }
     }
 }

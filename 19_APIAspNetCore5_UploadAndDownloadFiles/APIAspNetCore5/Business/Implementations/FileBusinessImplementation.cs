@@ -10,22 +10,20 @@ namespace APIAspNetCore5.Business.Implementations
 {
     public class FileBusinessImplementation : IFileBusiness
     {
-        private readonly string path;
+        private readonly string basePath;
         private readonly IHttpContextAccessor _context;
         public FileBusinessImplementation(IHttpContextAccessor context)
         {
             _context = context;
-            path = Directory.GetCurrentDirectory();
+            basePath = Directory.GetCurrentDirectory() + "\\UploadDir\\";
         }
-        public FileStream GetFile(string fileName)
+        public byte[] GetFile(string fileName)
         {
-
-            var fullPath = path + $"\\Other\\UploadDir\\{fileName}";
-            var file = File.OpenRead(fullPath);
-            return file;
+            var filePath = basePath + fileName;
+            return File.ReadAllBytes(filePath);
         }
 
-        public async Task<FileDetailVO> SaveFileToDiskAsync(IFormFile file)
+        public async Task<FileDetailVO> SaveFileToDisk(IFormFile file)
         {
             FileDetailVO fileDetail = new FileDetailVO();
             var fileType = Path.GetExtension(file.FileName);
@@ -33,11 +31,10 @@ namespace APIAspNetCore5.Business.Implementations
 
             if (fileType.ToLower() == ".pdf" || fileType.ToLower() == ".jpg" || fileType.ToLower() == ".png" || fileType.ToLower() == ".jpeg")
             {
-                var fullPath = path + "\\Other\\UploadDir\\";
                 var docName = Path.GetFileName(file.FileName);
                 if (file != null && file.Length > 0)
                 {
-                    var destination = Path.Combine(fullPath, "", docName);
+                    var destination = Path.Combine(basePath, "", docName);
                     fileDetail.DocumentName = docName;
                     fileDetail.DocType = fileType;
                     fileDetail.DocUrl = Path.Combine(baseURL + "/api/file/v1/", fileDetail.DocumentName);
@@ -49,12 +46,12 @@ namespace APIAspNetCore5.Business.Implementations
             return fileDetail;
         }
 
-        public async Task<List<FileDetailVO>> SaveFilesToDiskAsync(IList<IFormFile> files)
+        public async Task<List<FileDetailVO>> SaveFilesToDisk(IList<IFormFile> files)
         {
             List<FileDetailVO> list = new List<FileDetailVO>();
             foreach (var file in files)
             {
-                list.Add(await SaveFileToDiskAsync(file));
+                list.Add(await SaveFileToDisk(file));
             }
             return list;
         }
