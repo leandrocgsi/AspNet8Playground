@@ -12,14 +12,14 @@ namespace APIAspNetCore5.Controllers
     */
     [ApiController]
     [Route("api/[controller]")]
-    public class PersonsController : ControllerBase
+    public class PersonController : ControllerBase
     {
         //Declaração do serviço usado
         private IPersonService _personService;
 
         /* Injeção de uma instancia de IPersonService ao criar
         uma instancia de PersonController */
-        public PersonsController(IPersonService personService)
+        public PersonController(IPersonService personService)
         {
             _personService = personService;
         }

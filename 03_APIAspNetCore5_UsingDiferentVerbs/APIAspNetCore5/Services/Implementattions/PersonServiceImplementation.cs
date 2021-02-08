@@ -4,7 +4,7 @@ using APIAspNetCore5.Model;
 
 namespace APIAspNetCore5.Services.Implementattions
 {
-    public class PersonServiceImpl : IPersonService
+    public class PersonServiceImplementation : IPersonService
     {
 
         // Contador responsável por gerar um fake ID já que não estamos

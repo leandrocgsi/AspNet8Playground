@@ -30,7 +30,7 @@ namespace APIAspNetCore5
             services.AddControllers();
 
             //Dependency Injection
-            services.AddScoped<IPersonService, PersonServiceImpl>();
+            services.AddScoped<IPersonService, PersonServiceImplementation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
