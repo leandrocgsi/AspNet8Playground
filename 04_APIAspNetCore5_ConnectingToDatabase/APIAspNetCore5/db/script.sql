@@ -1,11 +1,8 @@
-CREATE TABLE `persons` (
-	`Id` int(10) UNSIGNED NULL DEFAULT NULL,
-	`FirstName` VARCHAR(50) NULL DEFAULT NULL,
-	`LastName` VARCHAR(50) NULL DEFAULT NULL,
-	`Address` VARCHAR(50) NULL DEFAULT NULL,
-	`Gender` VARCHAR(50) NULL DEFAULT NULL
-)
-ENGINE=InnoDB
-;
-
-ALTER TABLE PERSONS CHANGE ID ID INT(10) AUTO_INCREMENT PRIMARY KEY;
+CREATE TABLE IF NOT EXISTS `person` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `address` varchar(100) NOT NULL,
+  `first_name` varchar(80) NOT NULL,
+  `gender` varchar(6) NOT NULL,
+  `last_name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`)
+) 
