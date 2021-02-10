@@ -39,9 +39,5 @@ namespace APIAspNetCore5.Business.Implementations
             _repository.Delete(id);
         }
 
-        public bool Exists(long id)
-        {
-            return _repository.Exists(id);
-        }
     }
 }
