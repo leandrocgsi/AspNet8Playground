@@ -32,24 +32,24 @@ namespace APIAspNetCore5
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+    public void ConfigureServices(IServiceCollection services)
+    {
+        var connection = Configuration["MySqlConnection:MySqlConnectionString"];
+        services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
+
+        if (Environment.IsDevelopment())
         {
-            var connection = Configuration["MySqlConnection:MySqlConnectionString"];
-            services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
-
-            if (Environment.IsDevelopment())
-            {
-                MigrateDatabase(connection);
-            }
-
-            services.AddControllers();
-
-            services.AddApiVersioning();
-
-            //Dependency Injection
-            services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+            MigrateDatabase(connection);
         }
+
+        services.AddControllers();
+
+        services.AddApiVersioning();
+
+        //Dependency Injection
+        services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
+        services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+    }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
