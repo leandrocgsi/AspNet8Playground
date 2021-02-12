@@ -42,7 +42,7 @@ namespace APIAspNetCore5
 
             if (Environment.IsDevelopment())
             {
-                MigrateDatabase(connection);
+                // MigrateDatabase(connection);
             }
 
             services.AddControllers();
