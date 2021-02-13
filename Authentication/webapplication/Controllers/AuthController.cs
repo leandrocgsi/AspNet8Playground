@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using webapplication.Business;
+using webapplication.Business.Implementations;
 using webapplication.Models;
 using webapplication.Services;
 
@@ -12,27 +14,25 @@ namespace webapplication.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        readonly MySQLContext userContext;
+        private ILoginBusiness _loginBusiness;
         readonly ITokenService tokenService;
 
-        public AuthController(MySQLContext userContext, ITokenService tokenService)
+        public AuthController(ILoginBusiness loginBusiness, ITokenService tokenService)
         {
-            this.userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
+            _loginBusiness = loginBusiness;
             this.tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
         }
 
         [HttpPost]
         [Route("login")]
-        public IActionResult Login([FromBody]LoginModel loginModel)
+        public IActionResult Login([FromBody]User userCredentials)
         {
-            if (loginModel == null)
+            if (userCredentials == null)
             {
                 return BadRequest("Invalid client request");
             }
 
-            var user = userContext.LoginModels
-                .FirstOrDefault(u => (u.UserName == loginModel.UserName) &&
-                                        (u.Password == loginModel.Password));
+            var user = _loginBusiness.ValidateCredentials(userCredentials);
 
             if (user == null)
             {
@@ -41,7 +41,7 @@ namespace webapplication.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, loginModel.UserName),
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Role, "Manager")
             };
 
@@ -51,12 +51,19 @@ namespace webapplication.Controllers
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
 
-            userContext.SaveChanges();
+            DateTime createDate = DateTime.Now;
+            DateTime expirationDate = createDate.AddMinutes(60);
+
+            _loginBusiness.RefreshUserInfo(user);
 
             return Ok(new
             {
-                Token = accessToken,
-                RefreshToken = refreshToken
+                autenticated = true,
+                created = createDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                expiration = expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                accessToken = accessToken,
+                refreshToken = refreshToken,
+                message = "OK"
             });
         }
     }

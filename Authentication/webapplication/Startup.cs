@@ -8,7 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using webapplication.Business;
+using webapplication.Business.Implementations;
 using webapplication.Models;
+using webapplication.Repository;
+using webapplication.Repository.Implementations;
 using webapplication.Services;
 
 namespace webapplication
@@ -65,6 +69,11 @@ namespace webapplication
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RestWithASPNETUdemy", Version = "v1" });
             });
+
+
+            services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
+
+            services.AddScoped<IUserRepository, UserRepositoryImplementation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

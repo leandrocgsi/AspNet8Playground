@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using webapplication.Business;
 using webapplication.Models;
 using webapplication.Services;
 
@@ -11,12 +12,12 @@ namespace webapplication.Controllers
     [ApiController]
     public class TokenController : ControllerBase
     {
-        readonly MySQLContext userContext;
+        private ILoginBusiness _loginBusiness;
         readonly ITokenService tokenService;
 
-        public TokenController(MySQLContext userContext, ITokenService tokenService)
+        public TokenController(ILoginBusiness loginBusiness, ITokenService tokenService)
         {
-            this.userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
+            _loginBusiness = loginBusiness;
             this.tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
         }
 
@@ -35,7 +36,7 @@ namespace webapplication.Controllers
             var principal = tokenService.GetPrincipalFromExpiredToken(accessToken);
             var username = principal.Identity.Name; //this is mapped to the Name claim by default
 
-            var user = userContext.LoginModels.SingleOrDefault(u => u.UserName == username);
+            var user = _loginBusiness.ValidateCredentials(username);
 
             if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
             {
@@ -46,12 +47,20 @@ namespace webapplication.Controllers
             var newRefreshToken = tokenService.GenerateRefreshToken();
 
             user.RefreshToken = newRefreshToken;
-            userContext.SaveChanges();
 
-            return new ObjectResult(new
+            DateTime createDate = DateTime.Now;
+            DateTime expirationDate = createDate.AddMinutes(60);
+
+            _loginBusiness.RefreshUserInfo(user);
+
+            return Ok(new
             {
+                autenticated = true,
+                created = createDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                expiration = expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 accessToken = newAccessToken,
-                refreshToken = newRefreshToken
+                refreshToken = newRefreshToken,
+                message = "OK"
             });
         }
 
@@ -61,13 +70,7 @@ namespace webapplication.Controllers
         {
             var username = User.Identity.Name;
 
-            var user = userContext.LoginModels.SingleOrDefault(u => u.UserName == username);
-            if (user == null) return BadRequest();
-
-            user.RefreshToken = null;
-
-            userContext.SaveChanges();
-
+            if (!_loginBusiness.RevokeToken(username)) return BadRequest();
             return NoContent();
         }
 

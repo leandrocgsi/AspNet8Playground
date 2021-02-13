@@ -85,9 +85,9 @@ namespace APIAspNetCore5.Repository.Generic
                     _context.Entry(result).CurrentValues.SetValues(item);
                     _context.SaveChanges();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    throw ex;
+                    throw;
                 }
             }
             return result;

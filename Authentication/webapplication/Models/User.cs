@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace webapplication.Models
 {
     [Table("loginmodel")]
-    public class LoginModel
+    public class User
     {
         [Key]
         public long Id { get; set; }

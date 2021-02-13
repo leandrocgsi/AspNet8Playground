@@ -10,6 +10,7 @@ namespace APIAspNetCore5.Security.Configuration
 
         public SigningConfigurations()
         {
+            //var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
             using (var provider = new RSACryptoServiceProvider(2048))
             {
                 Key = new RsaSecurityKey(provider.ExportParameters(true));
