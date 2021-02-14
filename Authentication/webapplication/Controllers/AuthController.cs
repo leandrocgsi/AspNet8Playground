@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using webapplication.Business;
-using webapplication.Business.Implementations;
 using webapplication.Models;
-using webapplication.Services;
 
 namespace webapplication.Controllers
 {
@@ -15,56 +10,46 @@ namespace webapplication.Controllers
     public class AuthController : ControllerBase
     {
         private ILoginBusiness _loginBusiness;
-        readonly ITokenService tokenService;
 
-        public AuthController(ILoginBusiness loginBusiness, ITokenService tokenService)
+        public AuthController(ILoginBusiness loginBusiness)
         {
             _loginBusiness = loginBusiness;
-            this.tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
         }
 
         [HttpPost]
         [Route("login")]
         public IActionResult Login([FromBody]User userCredentials)
         {
-            if (userCredentials == null)
-            {
-                return BadRequest("Invalid client request");
-            }
+            if (userCredentials == null) return BadRequest("Invalid client request");
 
-            var user = _loginBusiness.ValidateCredentials(userCredentials);
+            var tokenResponse = _loginBusiness.ValidateCredentials(userCredentials);
 
-            if (user == null)
-            {
-                return Unauthorized();
-            }
+            if (tokenResponse == null) return Unauthorized();
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Role, "Manager")
-            };
+            return Ok(tokenResponse);
+        }
 
-            var accessToken = tokenService.GenerateAccessToken(claims);
-            var refreshToken = tokenService.GenerateRefreshToken();
+        [HttpPost]
+        [Route("refresh")]
+        public IActionResult Refresh([FromBody] TokenResponse token)
+        {
+            if (token is null) return BadRequest("Invalid client request");
 
-            user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
+            var user = _loginBusiness.ValidateCredentials(token);
 
-            DateTime createDate = DateTime.Now;
-            DateTime expirationDate = createDate.AddMinutes(60);
+            if (user == null) BadRequest("Invalid client request");
 
-            _loginBusiness.RefreshUserInfo(user);
+            return Ok(user);
+        }
 
-            return Ok(new
-            {
-                autenticated = true,
-                created = createDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                expiration = expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                accessToken = accessToken,
-                refreshToken = refreshToken,
-                message = "OK"
-            });
+        [HttpPost, Authorize]
+        [Route("revoke")]
+        public IActionResult Revoke()
+        {
+            var username = User.Identity.Name;
+
+            if (!_loginBusiness.RevokeToken(username)) return BadRequest("Invalid client request");
+            return NoContent();
         }
     }
 }
