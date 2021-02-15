@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using webapplication.Models;
-using webapplication.Repository;
-using webapplication.Services;
+using RestWithASPNETUdemy.Models;
+using RestWithASPNETUdemy.Repository;
+using RestWithASPNETUdemy.Security.Configuration;
+using RestWithASPNETUdemy.Services;
 
-namespace webapplication.Business.Implementations
+namespace RestWithASPNETUdemy.Business.Implementations
 {
     public class LoginBusinessImplementation : ILoginBusiness
     {
+        private const string DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+        private TokenConfiguration _configurations;
+
         private IUserRepository _repository;
-        readonly ITokenService _tokenService;
-        public LoginBusinessImplementation(IUserRepository repository, ITokenService tokenService)
+        private readonly ITokenService _tokenService;
+        public LoginBusinessImplementation(IUserRepository repository, ITokenService tokenService, TokenConfiguration configurations)
         {
             _repository = repository;
             _tokenService = tokenService;
+            _configurations = configurations;
         }
 
         public TokenResponse ValidateCredentials(User userCredentials)
@@ -26,24 +33,24 @@ namespace webapplication.Business.Implementations
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Role, "Manager")
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
             };
 
             var accessToken = _tokenService.GenerateAccessToken(claims);
             var refreshToken = _tokenService.GenerateRefreshToken();
 
             user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
+            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(_configurations.DaysToExpiry);
 
             DateTime createDate = DateTime.Now;
-            DateTime expirationDate = createDate.AddMinutes(60);
+            DateTime expirationDate = createDate.AddMinutes(_configurations.Minutes);
 
             _repository.RefreshUserInfo(user);
             return new TokenResponse(
                         true,
-                        createDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                        expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                        createDate.ToString(DATE_FORMAT),
+                        expirationDate.ToString(DATE_FORMAT),
                         accessToken,
                         refreshToken);
         }
@@ -68,13 +75,13 @@ namespace webapplication.Business.Implementations
             user.RefreshToken = refreshToken;
 
             DateTime createDate = DateTime.Now;
-            DateTime expirationDate = createDate.AddMinutes(60);
+            DateTime expirationDate = createDate.AddMinutes(_configurations.Minutes);
 
             _repository.RefreshUserInfo(user);
             return new TokenResponse(
                         true,
-                        createDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                        expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                        createDate.ToString(DATE_FORMAT),
+                        expirationDate.ToString(DATE_FORMAT),
                         accessToken,
                         refreshToken);
         }

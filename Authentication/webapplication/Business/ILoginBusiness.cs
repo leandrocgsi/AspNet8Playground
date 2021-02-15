@@ -1,6 +1,6 @@
-﻿using webapplication.Models;
+﻿using RestWithASPNETUdemy.Models;
 
-namespace webapplication.Business
+namespace RestWithASPNETUdemy.Business
 {
     public interface ILoginBusiness
     {

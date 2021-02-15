@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using webapplication.Business;
-using webapplication.Models;
+using RestWithASPNETUdemy.Business;
+using RestWithASPNETUdemy.Models;
 
-namespace webapplication.Controllers
+namespace RestWithASPNETUdemy.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,7 +17,7 @@ namespace webapplication.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
+        [Route("signin")]
         public IActionResult Login([FromBody]User userCredentials)
         {
             if (userCredentials == null) return BadRequest("Invalid client request");

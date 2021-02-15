@@ -1,6 +1,6 @@
-﻿using webapplication.Models;
+﻿using RestWithASPNETUdemy.Models;
 
-namespace webapplication.Repository
+namespace RestWithASPNETUdemy.Repository
 {
     public interface IUserRepository
     {

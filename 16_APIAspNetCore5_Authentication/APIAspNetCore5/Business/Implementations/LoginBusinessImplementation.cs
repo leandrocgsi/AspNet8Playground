@@ -1,10 +1,13 @@
 ﻿using APIAspNetCore5.Data.VO;
 using APIAspNetCore5.Repository;
 using APIAspNetCore5.Security.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Text;
 
 namespace APIAspNetCore5.Business.Implementations
 {
@@ -46,7 +49,7 @@ namespace APIAspNetCore5.Business.Implementations
                 DateTime expirationDate = createDate + TimeSpan.FromSeconds(_tokenConfigurations.Seconds);
 
                 var handler = new JwtSecurityTokenHandler();
-                string token = CreateToken(identity, createDate, expirationDate, handler);
+                string token = CreateToken(identity);
 
                 return SuccessObject(createDate, expirationDate, token);
             }
@@ -56,20 +59,21 @@ namespace APIAspNetCore5.Business.Implementations
             }
         }
 
-        private string CreateToken(ClaimsIdentity identity, DateTime createDate, DateTime expirationDate, JwtSecurityTokenHandler handler)
+        private string CreateToken(IEnumerable<Claim> claims)
         {
-            var securityToken = handler.CreateToken(new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor
-            {
-                Issuer = _tokenConfigurations.Issuer,
-                Audience = _tokenConfigurations.Audience,
-                SigningCredentials = _signingConfigurations.SigningCredentials,
-                Subject = identity,
-                NotBefore = createDate,
-                Expires = expirationDate
-            });
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MY_SUPER_SECRET_KEY"));
+            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
-            var token = handler.WriteToken(securityToken);
-            return token;
+            var tokenOptions = new JwtSecurityToken(
+                issuer: _tokenConfigurations.Issuer,
+                audience: _tokenConfigurations.Audience,
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(60),
+                signingCredentials: signinCredentials
+            );
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+            return tokenString;
         }
 
         private object ExceptionObject()

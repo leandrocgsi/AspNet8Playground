@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using webapplication.Models;
+using RestWithASPNETUdemy.Models;
 
-namespace webapplication.Repository.Implementations
+namespace RestWithASPNETUdemy.Repository.Implementations
 {
     public class UserRepositoryImplementation : IUserRepository
     {

@@ -1,4 +1,4 @@
-﻿namespace webapplication.Models
+﻿namespace RestWithASPNETUdemy.Models
 {
     public class TokenResponse
     {
