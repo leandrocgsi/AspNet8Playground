@@ -2,6 +2,9 @@
 
 [![Build Status](https://travis-ci.org/leandrocgsi/RestWithASP-NETUdemy.svg?branch=master)](https://travis-ci.org/leandrocgsi/RestWithASP-NETUdemy)
 ![Docker](https://github.com/leandrocgsi/AspNetCore5Playground/workflows/Docker/badge.svg)
+![Forks](https://img.shields.io/github/forks/leandrocgsi/AspNetCore5Playground)
+![Stars](https://img.shields.io/github/stars/leandrocgsi/AspNetCore5Playground)
+![Last Commit](https://img.shields.io/github/last-commit/leandrocgsi/AspNetCore5Playground)
 
 # REST API's RESTFul do 0 à Nuvem Com ASP.NET 5 e Docker
 
