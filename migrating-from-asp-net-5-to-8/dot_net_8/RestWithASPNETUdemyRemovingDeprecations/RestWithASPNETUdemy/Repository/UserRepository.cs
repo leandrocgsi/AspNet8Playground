@@ -1,8 +1,6 @@
 ﻿using RestWithASPNETUdemy.Data.VO;
 using RestWithASPNETUdemy.Model;
 using RestWithASPNETUdemy.Model.Context;
-using System;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
