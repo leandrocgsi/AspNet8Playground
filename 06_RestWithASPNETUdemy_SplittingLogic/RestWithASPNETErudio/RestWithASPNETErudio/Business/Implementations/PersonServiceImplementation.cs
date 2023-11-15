@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore.Internal;
-using RestWithASPNETUdemy.Model;
-using RestWithASPNETUdemy.Model.Context;
-using RestWithASPNETUdemy.Repository;
+using RestWithASPNETErudio.Model;
+using RestWithASPNETErudio.Model.Context;
+using RestWithASPNETErudio.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RestWithASPNETUdemy.Business.Implementations
+namespace RestWithASPNETErudio.Business.Implementations
 {
     public class PersonBusinessImplementation : IPersonBusiness
     {
