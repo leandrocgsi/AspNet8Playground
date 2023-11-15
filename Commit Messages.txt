@@ -19,7 +19,7 @@
 18_RestWithASPNETUdemy_UploadAndDownloadFiles/                --> git acmp "Implementing Upload and Download Files"
 19_RestWithASPNETUdemy_AddingDockerSupport/                   --> git acmp "Adding Docker Support"
 20_RestWithASPNETUdemy_DeployToAzure/                         --> git acmp "Continuous Integration with Github Actions and Azure"
-BONUS_RestWithASPNETUdemy_MigratingFromDotNetCore2ToDotNet5/  --> git acmp "Migrating from .NET Core 2.x to .NET 5"
+BONUS_RestWithASPNETUdemy_MigratingFromDotNet5ToDotNet8/      --> git acmp "Migrating from .NET 5 to .NET 8"
 BONUS_RestWithASPNETUdemy_Postgres/                           --> git acmp "Connecting to Other Databases - Postgres"
 BONUS_RestWithASPNETUdemy_React/                              --> git acmp "Consuming API with React"
 BONUS_RestWithASPNETUdemy_SQL_Server/                         --> git acmp "Connecting to Other Databases - Microsoft SQL Server"
