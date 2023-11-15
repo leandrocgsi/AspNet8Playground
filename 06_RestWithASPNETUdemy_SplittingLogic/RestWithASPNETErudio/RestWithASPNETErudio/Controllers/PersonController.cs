@@ -1,11 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using RestWithASPNETErudio.Model;
 using RestWithASPNETErudio.Services;
 
 namespace RestWithASPNETErudio.Controllers
 {
+    // To Versioning our API
+    // https://github.com/microsoft/aspnet-api-versioning
+    // https://github.com/microsoft/aspnet-api-versioning/wiki/New-Services-Quick-Start#aspnet-core
+    // https://github.com/microsoft/aspnet-api-versioning/tree/master/samples/aspnetcore
+    [ApiVersion("1")]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/v{version:apiVersion}")]
     public class PersonController : ControllerBase
     {
 
