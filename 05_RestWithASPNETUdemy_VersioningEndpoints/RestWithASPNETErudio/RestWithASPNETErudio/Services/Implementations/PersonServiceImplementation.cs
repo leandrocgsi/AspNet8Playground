@@ -1,5 +1,9 @@
-﻿using RestWithASPNETErudio.Model;
-using RestWithASPNETErudio.Model.Context;
+﻿using Microsoft.EntityFrameworkCore.Internal;
+using RestWithASPNETUdemy.Model;
+using RestWithASPNETUdemy.Model.Context;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RestWithASPNETErudio.Services.Implementations
 {
