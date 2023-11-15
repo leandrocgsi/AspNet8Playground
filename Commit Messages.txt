@@ -1,7 +1,7 @@
 00_RestWithASPNETUdemy_ScaffoldViaTerminal/                   --> git acmp "Scaffolding a WebApi Project via Terminal"
 01_RestWithASPNETUdemy_ScaffoldViaVisualStudio/               --> git acmp "Scaffolding a WebApi Project via Visual Studio"
 02_RestWithASPNETUdemy_Calculator/                            --> git acmp "Implementing Calculator"
-03_RestWithASPNETUdemy_UsingDiferentVerbs/                    --> git acmp "Working with four verbs"
+03_RestWithASPNETUdemy_UsingDiferentVerbs/                    --> git acmp "Working with four main Verbs"
 04_RestWithASPNETUdemy_ConnectingToDatabase/                  --> git acmp "Connecting to Database"
 05_RestWithASPNETUdemy_VersioningEndpoints/                   --> git acmp "Versioning Endpoints"
 06_RestWithASPNETUdemy_SplittingLogic/                        --> git acmp "Splitting Logic"
