@@ -5,10 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RestWithASPNETErudio.Controllers
 {
-    // To Versioning our API
-    // https://github.com/microsoft/aspnet-api-versioning
-    // https://github.com/microsoft/aspnet-api-versioning/wiki/New-Services-Quick-Start#aspnet-core
-    // https://github.com/microsoft/aspnet-api-versioning/tree/master/samples/aspnetcore
+
     [ApiVersion("1")]
     [ApiController]
     [Route("api/[controller]/v{version:apiVersion}")]
