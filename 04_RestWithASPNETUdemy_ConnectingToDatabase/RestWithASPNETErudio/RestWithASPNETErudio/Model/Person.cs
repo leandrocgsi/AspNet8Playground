@@ -1,4 +1,6 @@
-﻿namespace RestWithASPNETErudio.Model
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RestWithASPNETErudio.Model
 {
     [Table("person")]
     public class Person
