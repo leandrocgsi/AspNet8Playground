@@ -1,6 +1,0 @@
-@RestWithASPNETUdemy_HostAddress = http://localhost:5029
-
-GET {{RestWithASPNETUdemy_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
