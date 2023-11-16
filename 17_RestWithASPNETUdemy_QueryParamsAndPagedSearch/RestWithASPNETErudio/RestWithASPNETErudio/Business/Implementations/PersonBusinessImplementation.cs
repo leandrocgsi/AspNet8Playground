@@ -1,5 +1,6 @@
 ﻿using RestWithASPNETErudio.Data.Converter.Implementations;
 using RestWithASPNETErudio.Data.VO;
+using RestWithASPNETErudio.Hypermedia.Utils;
 using RestWithASPNETErudio.Repository;
 
 namespace RestWithASPNETErudio.Business.Implementations
