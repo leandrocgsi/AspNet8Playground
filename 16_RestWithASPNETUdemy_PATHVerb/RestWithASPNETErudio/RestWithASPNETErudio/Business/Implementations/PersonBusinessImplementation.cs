@@ -8,11 +8,11 @@ namespace RestWithASPNETErudio.Business.Implementations
     public class PersonBusinessImplementation : IPersonBusiness
     {
 
-        private readonly IRepository<Person> _repository;
+        private readonly IPersonRepository _repository;
 
         private readonly PersonConverter _converter;
 
-        public PersonBusinessImplementation(IRepository<Person> repository)
+        public PersonBusinessImplementation(IPersonRepository repository)
         {
             _repository = repository;
             _converter = new PersonConverter();
@@ -43,6 +43,13 @@ namespace RestWithASPNETErudio.Business.Implementations
         {
             var personEntity = _converter.Parse(person);
             personEntity = _repository.Update(personEntity);
+            return _converter.Parse(personEntity);
+        }
+
+        // Method responsible for disable a person from an ID
+        public PersonVO Disable(long id)
+        {
+            var personEntity = _repository.Disable(id);
             return _converter.Parse(personEntity);
         }
 
