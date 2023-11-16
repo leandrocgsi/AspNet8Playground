@@ -1,4 +1,6 @@
-﻿namespace RestWithASPNETErudio.Data.VO
+﻿using System.Text.Json.Serialization;
+
+namespace RestWithASPNETErudio.Data.VO
 {
     public class PersonVO
     {
