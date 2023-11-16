@@ -10,6 +10,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Evolve" Version="3.2.0" />
+    	<PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Xml" Version="2.2.0" />
 		<PackageReference Include="Asp.Versioning.Mvc" Version="7.1.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
