@@ -115,11 +115,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<IFileBusiness, FileBusinessImplementation>();
 
 builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
 builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
 builder.Services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
-builder.Services.AddScoped<IFileBusiness, FileBusinessImplementation>();
 
 builder.Services.AddTransient<ITokenService, TokenService>();
 
