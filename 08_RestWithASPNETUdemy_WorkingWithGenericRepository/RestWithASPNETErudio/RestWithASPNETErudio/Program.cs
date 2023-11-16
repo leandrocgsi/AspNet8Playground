@@ -2,11 +2,11 @@ using RestWithASPNETErudio.Model.Context;
 using Microsoft.EntityFrameworkCore;
 using RestWithASPNETErudio.Business.Implementations;
 using RestWithASPNETErudio.Business;
-using RestWithASPNETErudio.Repository.Implementations;
-using RestWithASPNETErudio.Repository;
 using MySqlConnector;
 using Serilog;
 using EvolveDb;
+using RestWithASPNETErudio.Repository.Generic;
+using RestWithASPNETErudio.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +29,9 @@ builder.Services.AddApiVersioning();
 
 //Dependency Injection
 builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-builder.Services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
