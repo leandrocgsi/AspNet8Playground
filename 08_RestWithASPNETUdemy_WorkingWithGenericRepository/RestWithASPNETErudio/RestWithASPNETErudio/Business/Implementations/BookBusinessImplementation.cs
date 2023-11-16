@@ -1,8 +1,8 @@
-﻿using RestWithASPNETUdemy.Model;
-using RestWithASPNETUdemy.Repository;
+﻿using RestWithASPNETErudio.Model;
+using RestWithASPNETErudio.Repository;
 using System.Collections.Generic;
 
-namespace RestWithASPNETUdemy.Business.Implementations
+namespace RestWithASPNETErudio.Business.Implementations
 {
     public class BookBusinessImplementation : IBookBusiness
     {

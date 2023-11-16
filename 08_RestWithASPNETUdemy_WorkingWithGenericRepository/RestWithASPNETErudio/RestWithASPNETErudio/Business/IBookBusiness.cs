@@ -1,7 +1,7 @@
-﻿using RestWithASPNETUdemy.Model;
+﻿using RestWithASPNETErudio.Model;
 using System.Collections.Generic;
 
-namespace RestWithASPNETUdemy.Business
+namespace RestWithASPNETErudio.Business
 {
     public interface IBookBusiness
     {

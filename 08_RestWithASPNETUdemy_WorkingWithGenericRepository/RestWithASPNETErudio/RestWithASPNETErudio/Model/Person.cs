@@ -1,4 +1,4 @@
-﻿using RestWithASPNETUdemy.Model.Base;
+﻿using RestWithASPNETErudio.Model.Base;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestWithASPNETErudio.Model

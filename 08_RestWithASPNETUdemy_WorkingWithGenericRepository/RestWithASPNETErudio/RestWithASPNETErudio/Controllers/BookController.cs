@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using RestWithASPNETUdemy.Model;
-using RestWithASPNETUdemy.Business;
+using RestWithASPNETErudio.Model;
+using RestWithASPNETErudio.Business;
 
-namespace RestWithASPNETUdemy.Controllers
+namespace RestWithASPNETErudio.Controllers
 {
 
     [ApiVersion("1")]
