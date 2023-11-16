@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using RestWithASPNETErudio.Data.VO;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using RestWithASPNETErudio.Data.VO;
 
 namespace RestWithASPNETErudio.Business
 {

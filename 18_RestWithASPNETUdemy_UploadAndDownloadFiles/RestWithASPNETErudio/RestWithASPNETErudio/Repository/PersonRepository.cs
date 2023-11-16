@@ -1,8 +1,6 @@
 ﻿using RestWithASPNETErudio.Model;
 using RestWithASPNETErudio.Model.Context;
 using RestWithASPNETErudio.Repository.Generic;
-using System;
-using System.Linq;
 
 namespace RestWithASPNETErudio.Repository
 {
