@@ -10,8 +10,11 @@ using RestWithASPNETErudio.Repository;
 using Microsoft.Net.Http.Headers;
 using RestWithASPNETErudio.Hypermedia.Enricher;
 using RestWithASPNETErudio.Hypermedia.Filters;
+using Microsoft.AspNetCore.Rewrite;
 
 var builder = WebApplication.CreateBuilder(args);
+var appName = "REST API's from 0 to Azure with ASP.NET Core 8 and Docker";
+var appDescription = $"REST API RESTful developed in course '{appName}'";
 
 // Add services to the container.
 
@@ -54,18 +57,32 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1",
+        new Microsoft.OpenApi.Models.OpenApiInfo
+        {
+            Title = appName,
+            Version = "v1",
+            Description = appDescription,
+            Contact = new Microsoft.OpenApi.Models.OpenApiContact
+            {
+                Name = "Leandro Costa",
+                Url = new Uri("https://github.com/leandrocgsi")
+            }
+        });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 app.UseHttpsRedirection();
+
+app.UseSwagger();
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{appName} - v1"));
+
+var option = new RewriteOptions();
+option.AddRedirect("^$", "swagger");
+app.UseRewriter(option);
 
 app.UseAuthorization();
 
