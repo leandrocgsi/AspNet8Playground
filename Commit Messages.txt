@@ -8,7 +8,7 @@
 07_RestWithASPNETUdemy_AddingSupportToDatabaseMigrations/     --> git acmp "Adding Support to Database Migrations"
 08_RestWithASPNETUdemy_WorkingWithGenericRepository/          --> git acmp "Working With Generic Repository"
 09_RestWithASPNETUdemy_WorkingWithValueObjects/               --> git acmp "Working With Value Objects"
-10_RestWithASPNETUdemy_CustomSerialization/                   --> git acmp "Custom Serialization"
+10_RestWithASPNETUdemy_CustomSerialization/                   --> git acmp "Custom JSON Serialization"
 11_RestWithASPNETUdemy_ContentNegotiation/                    --> git acmp "Working with Content Negotiation"
 12_RestWithASPNETUdemy_HATEOAS/                               --> git acmp "Working with HATEOAS"
 13_RestWithASPNETUdemy_Swagger/                               --> git acmp "Adding Swagger Support"
