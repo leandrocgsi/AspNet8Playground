@@ -1,4 +1,5 @@
 ﻿using RestWithASPNETErudio.Data.VO;
+using RestWithASPNETErudio.Hypermedia.Utils;
 
 namespace RestWithASPNETErudio.Business
 {

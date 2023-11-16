@@ -19,7 +19,6 @@ using RestWithASPNETErudio.Configurations;
 using System.Text;
 using RestWithASPNETErudio.Services.Implementations;
 using RestWithASPNETErudio.Services;
-using RestWithASPNETErudio.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 var appName = "REST API's from 0 to Azure with ASP.NET Core 8 and Docker";

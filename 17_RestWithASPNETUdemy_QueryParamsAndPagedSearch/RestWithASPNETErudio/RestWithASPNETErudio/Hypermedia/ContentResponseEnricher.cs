@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Routing;
 using RestWithASPNETErudio.Hypermedia.Abstract;
+using RestWithASPNETErudio.Hypermedia.Utils;
 using System.Collections.Concurrent;
 
 namespace RestWithASPNETErudio.Hypermedia
