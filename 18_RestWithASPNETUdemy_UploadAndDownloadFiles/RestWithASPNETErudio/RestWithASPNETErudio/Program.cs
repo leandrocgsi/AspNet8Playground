@@ -19,6 +19,9 @@ using RestWithASPNETErudio.Configurations;
 using System.Text;
 using RestWithASPNETErudio.Services.Implementations;
 using RestWithASPNETErudio.Services;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using RestWithASPNETErudio.Business.Implementations;
+using RestWithASPNETErudio.Business;
 
 var builder = WebApplication.CreateBuilder(args);
 var appName = "REST API's from 0 to Azure with ASP.NET Core 8 and Docker";
@@ -100,6 +103,9 @@ builder.Services.AddSingleton(filterOptions);
 builder.Services.AddApiVersioning();
 
 //Dependency Injection
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<IFileBusiness, FileBusinessImplementation>();
+
 builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
 builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
 builder.Services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();

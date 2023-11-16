@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
-using RestWithASPNETUdemy.Data.VO;
+using RestWithASPNETErudio.Data.VO;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RestWithASPNETUdemy.Business.Implementations
+namespace RestWithASPNETErudio.Business.Implementations
 {
     public class FileBusinessImplementation : IFileBusiness
     {

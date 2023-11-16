@@ -1,4 +1,4 @@
-﻿namespace RestWithASPNETUdemy.Data.VO
+﻿namespace RestWithASPNETErudio.Data.VO
 {
     public class FileDetailVO
     {

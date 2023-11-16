@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
-using RestWithASPNETUdemy.Data.VO;
+using RestWithASPNETErudio.Data.VO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace RestWithASPNETUdemy.Business
+namespace RestWithASPNETErudio.Business
 {
     public interface IFileBusiness
     {
