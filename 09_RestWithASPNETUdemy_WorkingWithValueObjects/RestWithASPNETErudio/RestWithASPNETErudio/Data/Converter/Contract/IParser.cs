@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace RestWithASPNETErudio.Data.Converter.Contract
+﻿namespace RestWithASPNETErudio.Data.Converter.Contract
 {
     public interface IParser<O, D>
     {

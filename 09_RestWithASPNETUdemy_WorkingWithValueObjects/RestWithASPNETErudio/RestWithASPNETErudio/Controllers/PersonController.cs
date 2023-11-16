@@ -1,10 +1,6 @@
 ﻿using Asp.Versioning;
-using RestWithASPNETErudio.Model;
 using RestWithASPNETErudio.Business;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using RestWithASPNETErudio.Model;
-using RestWithASPNETErudio.Business;
 using RestWithASPNETErudio.Data.VO;
 
 namespace RestWithASPNETErudio.Controllers

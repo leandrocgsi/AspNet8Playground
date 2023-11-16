@@ -1,8 +1,6 @@
 ﻿using RestWithASPNETErudio.Data.Converter.Contract;
 using RestWithASPNETErudio.Data.VO;
 using RestWithASPNETErudio.Model;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace RestWithASPNETErudio.Data.Converter.Implementations
 {

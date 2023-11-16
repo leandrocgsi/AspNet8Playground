@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RestWithASPNETErudio.Data.VO
+﻿namespace RestWithASPNETErudio.Data.VO
 {
     public class BookVO
     {
