@@ -1,4 +1,4 @@
-# Asp Net Core 5 Playground
+# Asp Net 8 Playground
 
 [![Build Status](https://travis-ci.org/leandrocgsi/RestWithASP-NETUdemy.svg?branch=master)](https://travis-ci.org/leandrocgsi/RestWithASP-NETUdemy)
 ![Docker](https://github.com/leandrocgsi/AspNetCore5Playground/workflows/Docker/badge.svg)
@@ -6,7 +6,7 @@
 ![Stars](https://img.shields.io/github/stars/leandrocgsi/AspNetCore5Playground)
 ![Last Commit](https://img.shields.io/github/last-commit/leandrocgsi/AspNetCore5Playground)
 
-# REST API's RESTFul do 0 à Nuvem Com ASP.NET 5 e Docker
+# REST API's RESTFul do 0 à Nuvem Com ASP.NET Core 5 e 8 e Docker
 
 [![Image](https://github.com/leandrocgsi/RestWithSpringBootUdemy/blob/master/Images/rest_apis_restful_do_0_a_nuvem_com_asp_net_core_e_docker.png?raw=true "REST API's RESTFul do 0 à Azure com ASP.NET Core 5 e Docker")](https://www.udemy.com/course/restful-apis-do-0-a-nuvem-com-aspnet-core-e-docker/?couponCode=GTHB_FLASH_SALE2021)
 
