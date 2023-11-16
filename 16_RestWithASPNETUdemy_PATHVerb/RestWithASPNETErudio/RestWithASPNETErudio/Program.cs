@@ -19,6 +19,7 @@ using RestWithASPNETErudio.Configurations;
 using System.Text;
 using RestWithASPNETErudio.Services.Implementations;
 using RestWithASPNETErudio.Services;
+using RestWithASPNETErudio.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 var appName = "REST API's from 0 to Azure with ASP.NET Core 8 and Docker";
@@ -107,6 +108,7 @@ builder.Services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
 builder.Services.AddTransient<ITokenService, TokenService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 

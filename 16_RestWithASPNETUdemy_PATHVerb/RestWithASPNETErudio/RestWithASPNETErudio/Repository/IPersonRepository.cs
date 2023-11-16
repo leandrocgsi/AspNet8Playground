@@ -1,6 +1,6 @@
-﻿using RestWithASPNETUdemy.Model;
+﻿using RestWithASPNETErudio.Model;
 
-namespace RestWithASPNETUdemy.Repository
+namespace RestWithASPNETErudio.Repository
 {
     public interface IPersonRepository : IRepository<Person>
     {

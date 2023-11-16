@@ -1,10 +1,10 @@
-﻿using RestWithASPNETUdemy.Model;
-using RestWithASPNETUdemy.Model.Context;
-using RestWithASPNETUdemy.Repository.Generic;
+﻿using RestWithASPNETErudio.Model;
+using RestWithASPNETErudio.Model.Context;
+using RestWithASPNETErudio.Repository.Generic;
 using System;
 using System.Linq;
 
-namespace RestWithASPNETUdemy.Repository
+namespace RestWithASPNETErudio.Repository
 {
     public class PersonRepository : GenericRepository<Person>, IPersonRepository
     {
