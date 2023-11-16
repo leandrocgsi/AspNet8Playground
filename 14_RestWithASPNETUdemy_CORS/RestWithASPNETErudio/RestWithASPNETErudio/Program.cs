@@ -16,7 +16,12 @@ var builder = WebApplication.CreateBuilder(args);
 var appName = "REST API's from 0 to Azure with ASP.NET Core 8 and Docker";
 var appDescription = $"REST API RESTful developed in course '{appName}'";
 
-// Add services to the container.
+builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
+{
+    builder.AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader();
+}));
 
 builder.Services.AddControllers();
 
@@ -76,6 +81,8 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{appName} - v1"));
