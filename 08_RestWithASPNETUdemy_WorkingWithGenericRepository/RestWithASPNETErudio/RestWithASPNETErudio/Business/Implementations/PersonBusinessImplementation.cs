@@ -1,23 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore.Internal;
-using RestWithASPNETErudio.Model;
-using RestWithASPNETErudio.Model.Context;
-using RestWithASPNETErudio.Repository;
+using RestWithASPNETUdemy.Model;
+using RestWithASPNETUdemy.Model.Context;
+using RestWithASPNETUdemy.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RestWithASPNETErudio.Business.Implementations
+namespace RestWithASPNETUdemy.Business.Implementations
 {
     public class PersonBusinessImplementation : IPersonBusiness
     {
 
-        private readonly IPersonRepository _repository;
+        private readonly IRepository<Person> _repository;
 
-        public PersonBusinessImplementation(IPersonRepository repository)
+        public PersonBusinessImplementation(IRepository<Person> repository)
         {
             _repository = repository;
         }
-        
+
         // Method responsible for returning all people,
         public List<Person> FindAll()
         {

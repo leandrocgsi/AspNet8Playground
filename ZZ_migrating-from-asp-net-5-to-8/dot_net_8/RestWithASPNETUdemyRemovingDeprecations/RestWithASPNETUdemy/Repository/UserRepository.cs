@@ -15,13 +15,13 @@ namespace RestWithASPNETUdemy.Repository
             _context = context;
         }
 
-        public User ValidateCredentials(UserVO user)
+        public User? ValidateCredentials(UserVO user)
         {
             var pass = ComputeHash(user.Password, SHA256.Create());
             return _context.Users.FirstOrDefault(u => (u.UserName == user.UserName) && (u.Password == pass));
         }
 
-        public User ValidateCredentials(string userName)
+        public User? ValidateCredentials(string userName)
         {
             return _context.Users.SingleOrDefault(u => (u.UserName == userName));
         }
@@ -35,7 +35,7 @@ namespace RestWithASPNETUdemy.Repository
             return true;
         }
 
-        public User RefreshUserInfo(User user)
+        public User? RefreshUserInfo(User user)
         {
             if (!_context.Users.Any(u => u.Id.Equals(user.Id))) return null;
 
