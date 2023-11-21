@@ -56,10 +56,10 @@ namespace RestWithASPNETErudio.Repository
             return result;
         }
 
-        private string ComputeHash(string input, HashAlgorithm hashAlgorithm)
+        private string ComputeHash(string input, HashAlgorithm algorithm)
         {
             byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-            byte[] hashedBytes = hashAlgorithm.ComputeHash(inputBytes);
+            byte[] hashedBytes = algorithm.ComputeHash(inputBytes);
 
             var builder = new StringBuilder();
 
