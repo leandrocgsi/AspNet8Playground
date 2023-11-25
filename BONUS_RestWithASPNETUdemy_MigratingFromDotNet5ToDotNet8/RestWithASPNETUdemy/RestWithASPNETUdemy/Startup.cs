@@ -92,8 +92,12 @@ namespace RestWithASPNETUdemy
             services.AddControllers();
 
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
-            services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
-            
+            services.AddDbContext<MySQLContext>(options => options.UseMySql(
+                connection,
+                new MySqlServerVersion(new Version(8, 0, 29)))
+            );
+
+
             if (Environment.IsDevelopment())
             {
                 MigrateDatabase(connection);
