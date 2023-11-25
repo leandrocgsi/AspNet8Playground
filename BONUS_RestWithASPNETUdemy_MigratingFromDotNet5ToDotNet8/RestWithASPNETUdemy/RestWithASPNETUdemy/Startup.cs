@@ -27,6 +27,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Http;
+using EvolveDb;
+using MySqlConnector;
 
 namespace RestWithASPNETUdemy
 {
@@ -191,8 +193,8 @@ namespace RestWithASPNETUdemy
         {
             try
             {
-                var evolveConnection = new MySql.Data.MySqlClient.MySqlConnection(connection);
-                var evolve = new Evolve.Evolve(evolveConnection, msg => Log.Information(msg))
+                var evolveConnection = new MySqlConnection(connection);
+                var evolve = new Evolve(evolveConnection, msg => Log.Information(msg))
                 {
                     Locations = new List<string> { "db/migrations", "db/dataset" },
                     IsEraseDisabled = true,
